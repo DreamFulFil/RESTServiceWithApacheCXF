@@ -1,5 +1,7 @@
 package dream.blog.practice.rest.service.config;
 
+import java.util.Arrays;
+
 import org.apache.cxf.bus.spring.SpringBus;
 import org.apache.cxf.endpoint.Server;
 import org.apache.cxf.jaxrs.JAXRSServerFactoryBean;
@@ -12,7 +14,9 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
 
+import dream.blog.practice.rest.service.resource.CarResource;
 import dream.blog.practice.rest.service.resource.StudentResource;
+import dream.blog.practice.rest.service.resource.impl.CarResourceImpl;
 import dream.blog.practice.rest.service.resource.impl.StudentResourceImpl;
 
 @Configuration
@@ -36,6 +40,11 @@ public class RootConfig {
 	}
 	
 	@Bean
+	public CarResource carResource() {
+		return new CarResourceImpl();
+	}
+	
+	@Bean
 	public JacksonJsonProvider jsonProvider(){
 		return new JacksonJsonProvider();
 	}
@@ -45,7 +54,7 @@ public class RootConfig {
 		JAXRSServerFactoryBean factory = new JAXRSServerFactoryBean();
 		factory.setBus(cxf());
 		factory.setAddress("/v1");
-		factory.setServiceBean(studentResource());
+		factory.setServiceBeans(Arrays.asList(studentResource(), carResource()));
 		factory.setProvider(jsonProvider());
 		return factory.create();
 	}
