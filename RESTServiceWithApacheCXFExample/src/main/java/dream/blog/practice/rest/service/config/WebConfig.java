@@ -10,5 +10,5 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @ComponentScan(basePackages = { "dream.blog.practice.rest.service" })
 public class WebConfig implements WebMvcConfigurer {
 
-
+	 
 }
